@@ -49,20 +49,34 @@
       list.hidden = false; input.setAttribute('aria-expanded', 'true'); active = -1;
     }
 
+    // Строка состояния («Ищем...», «Не удалось...») вместо вариантов.
+    function status(text) {
+      items = [];
+      list.replaceChildren(el('li', { class: 'suggest-status', role: 'status', text: text }));
+      list.hidden = false; input.setAttribute('aria-expanded', 'true'); active = -1;
+    }
+
+    // Публичный Photon иногда отвечает 5-8 секунд, поэтому ждём до 15 и показываем, что идёт поиск.
     function search(q) {
       if (cache[q]) { show(cache[q]); return; }
       if (ctrl) ctrl.abort();
-      ctrl = new AbortController();
-      var abortTimer = setTimeout(function () { ctrl.abort(); }, 5000);
-      fetch(S.buildUrl(q, 6), { signal: ctrl.signal, headers: { Accept: 'application/json' } })
+      var mine = ctrl = new AbortController();
+      var abortTimer = setTimeout(function () { mine.abort(); }, 15000);
+      status('Ищем адреса...');
+      fetch(S.buildUrl(q, 6), { signal: mine.signal, headers: { Accept: 'application/json' } })
         .then(function (r) { if (!r.ok) throw new Error('http ' + r.status); return r.json(); })
         .then(function (json) {
           clearTimeout(abortTimer);
           var found = S.parse(json);
           cache[q] = found;
-          if (input.value.trim() === q && document.activeElement === input) show(found);
+          if (input.value.trim() !== q || document.activeElement !== input) return;
+          if (found.length) show(found); else status('Ничего не найдено. Введите адрес вручную.');
         })
-        .catch(function () { clearTimeout(abortTimer); close(); });
+        .catch(function (err) {
+          clearTimeout(abortTimer);
+          if (mine !== ctrl) return;            // запрос заменён более новым
+          if (input.value.trim() === q && document.activeElement === input) status('Подсказки недоступны. Введите адрес вручную.');
+        });
     }
 
     input.addEventListener('input', function () {
@@ -73,6 +87,7 @@
     });
     input.addEventListener('keydown', function (e) {
       if (list.hidden) return;
+      if (!items.length) { if (e.key === 'Escape') { e.stopPropagation(); close(); } return; }
       if (e.key === 'ArrowDown') { e.preventDefault(); setActive((active + 1) % items.length); }
       else if (e.key === 'ArrowUp') { e.preventDefault(); setActive((active - 1 + items.length) % items.length); }
       else if (e.key === 'Enter' && active >= 0) { e.preventDefault(); choose(active); }
