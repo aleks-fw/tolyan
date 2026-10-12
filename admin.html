@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="ru" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Админ-панель: Толян</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23f97316'/%3E%3Ctext x='16' y='23' font-family='Arial' font-weight='800' font-size='20' text-anchor='middle' fill='%231c1917'%3E%D0%A2%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/admin.css">
+  <script src="js/theme.js"></script>
+</head>
+<body>
+  <header class="admin-header">
+    <div class="container admin-header-inner">
+      <a class="logo" href="index.html" aria-label="Толян, на сайт">
+        <span class="logo-mark" aria-hidden="true">Т</span>
+        <span class="logo-text">Толян</span>
+        <span class="admin-tag">Админ-панель</span>
+      </a>
+      <div class="admin-header-actions">
+        <a class="btn btn-ghost btn-sm" href="index.html">На сайт</a>
+        <button class="icon-btn theme-toggle" type="button" data-theme-toggle aria-pressed="false" aria-label="Включить тёмную тему">
+          <span class="theme-icon" aria-hidden="true"></span>
+        </button>
+        <button class="btn btn-outline btn-sm" type="button" id="logout" hidden>Выйти</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container admin-main" id="admin-root">
+    <p class="muted">Загрузка...</p>
+  </main>
+
+  <div class="toast-host" id="toast-host" role="status" aria-live="polite"></div>
+
+  <script src="js/config.js"></script>
+  <script src="js/lib/calc.js"></script>
+  <script src="js/lib/validate.js"></script>
+  <script src="js/lib/order-message.js"></script>
+  <script src="js/seed.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/admin.js"></script>
+  <script src="js/admin-orders.js"></script>
+  <script src="js/admin-catalog.js"></script>
+  <script src="js/admin-settings.js"></script>
+  <script>Tolyan.admin.start();</script>
+</body>
+</html>

@@ -121,5 +121,27 @@
     return okay;
   }
 
-  T.ui = { el: el, toast: toast, reveal: reveal, image: image, modal: modal, copyText: copyText };
+  // Файл-картинка -> data URL, уменьшенный до maxW по ширине (чтобы не раздувать localStorage).
+  function fileToDataUrl(file, maxW) {
+    return new Promise(function (resolve, reject) {
+      if (!file || !/^image\//.test(file.type)) { reject(new Error('Выберите файл-изображение')); return; }
+      var reader = new FileReader();
+      reader.onerror = function () { reject(new Error('Не удалось прочитать файл')); };
+      reader.onload = function () {
+        var img = new Image();
+        img.onerror = function () { reject(new Error('Не удалось открыть изображение')); };
+        img.onload = function () {
+          var w = Math.min(maxW || 1000, img.naturalWidth), h = Math.round(img.naturalHeight * w / img.naturalWidth);
+          var c = document.createElement('canvas'); c.width = w; c.height = h;
+          c.getContext('2d').drawImage(img, 0, 0, w, h);
+          resolve(c.toDataURL('image/jpeg', 0.82));
+        };
+        img.src = reader.result;
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  T.ui = { el: el, toast: toast, reveal: reveal, image: image, modal: modal, copyText: copyText,
+           fileToDataUrl: fileToDataUrl };
 })();
