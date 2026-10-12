@@ -107,6 +107,19 @@ test('экспорт и импорт сохраняют заказы и счёт
   assert.equal((await b.listOrders()).length, 0);
 });
 
+test('миграция: старые общие фото стартовых товаров заменяются, свои фото остаются', async () => {
+  const st = memoryStorage();
+  const seed = require('../js/seed');
+  const mats = seed.materials();
+  mats[0].image = 'assets/img/gravel-pile.jpg';       // старое общее фото
+  mats[1].image = 'https://example.com/mine.jpg';     // фото владельца
+  st.setItem('tolyan.materials', JSON.stringify(mats));
+  const s = createLocalStore(st, { now: FIXED });
+  const list = await s.listMaterials();
+  assert.equal(list.find((m) => m.id === mats[0].id).image, seed.materials()[0].image);
+  assert.equal(list.find((m) => m.id === mats[1].id).image, 'https://example.com/mine.jpg');
+});
+
 test('вход: неверный и верный пароль, выход', async () => {
   const s = mk();
   assert.equal(await s.isAdmin(), false);

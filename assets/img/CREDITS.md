@@ -6,9 +6,17 @@
 | Файл | Страница на Pexels |
 |------|--------------------|
 | hero.jpg | https://www.pexels.com/photo/drive-driver-engine-heavy-188679/ |
-| truck-flatbed.jpg | https://www.pexels.com/photo/a-white-truck-on-road-near-a-hill-13663664/ |
-| tipper-dump.jpg | https://www.pexels.com/photo/truck-lifting-trailer-near-tree-20350951/ |
-| stone.jpg | https://www.pexels.com/photo/heap-of-stones-on-ground-18282635/ |
-| gravel-pile.jpg | https://www.pexels.com/photo/shovel-on-pile-of-gravel-13824693/ |
+| truck-gazelle.jpg | https://www.pexels.com/photo/truck-in-front-of-a-warehouse-18885403/ |
+| truck-gazon.jpg | https://www.pexels.com/photo/industrial-truck-with-crane-in-construction-yard-29480559/ |
+| truck-kamaz-15.jpg | https://www.pexels.com/photo/dump-truck-on-dusty-road-at-sunset-40005425/ |
+| truck-kamaz-20.jpg | https://www.pexels.com/photo/dump-truck-and-excavator-at-construction-site-36506004/ |
+| truck-manipulator.jpg | https://www.pexels.com/photo/articulated-boom-truck-with-ace-loader-crane-29480553/ |
+| mat-sand.jpg | https://www.pexels.com/photo/truck-near-sand-heaps-17765495/ |
+| mat-sand-washed.jpg | https://www.pexels.com/photo/industrial-quarry-with-conveyor-belt-and-sand-piles-38862399/ |
+| mat-gravel-520.jpg | https://www.pexels.com/photo/close-up-of-gravel-4622069/ |
+| mat-gravel-2040.jpg | https://www.pexels.com/photo/heaps-of-sand-on-construction-6890415/ |
+| mat-screening.jpg | https://www.pexels.com/photo/sand-and-gravel-hills-11160727/ |
+| mat-soil.jpg | https://www.pexels.com/photo/shadows-cast-on-fresh-soil-12940879/ |
+| mat-pgs.jpg | https://www.pexels.com/photo/abundance-of-gravel-9891089/ |
 
 `truck-placeholder.svg` и `material-placeholder.svg` нарисованы для проекта, подставляются при ошибке загрузки фото.

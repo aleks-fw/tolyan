@@ -132,7 +132,7 @@
 .line-sum { font-weight: 700; text-align: right; grid-column: 1 / 2; }
 .line-remove { width: 40px; height: 40px; font-size: 1.25rem; }
 @media (min-width: 640px) {
-  .line-row { grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr) 110px 40px; }
+  .line-row { grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr) 110px; }
   .line-row .select { grid-column: auto; }
   .line-sum { grid-column: auto; }
 }

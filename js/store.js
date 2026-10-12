@@ -20,6 +20,10 @@
   var KEYS = { materials: 'tolyan.materials', trucks: 'tolyan.trucks', orders: 'tolyan.orders',
                settings: 'tolyan.settings', counter: 'tolyan.counter' };
   var SESSION_KEY = 'tolyan.admin';
+  var SEED_VERSION_KEY = 'tolyan.seedv';
+  var SEED_VERSION = 2;
+  var OLD_SEED_IMAGES = ['assets/img/gravel-pile.jpg', 'assets/img/stone.jpg',
+                         'assets/img/truck-flatbed.jpg', 'assets/img/tipper-dump.jpg'];
   var TRUCK_STATUSES = ['available', 'busy', 'service'];
   var ORDER_STATUSES = ['new', 'confirmed', 'in_progress', 'done', 'cancelled'];
 
@@ -72,6 +76,27 @@
       } catch (e) { return fallback(); }
     }
     function write(key, value) { storage.setItem(key, JSON.stringify(value)); }
+
+    // Миграция сохранённых демо-данных: у товаров из стартового набора заменяем старые общие фото на новые.
+    // Фото, которые владелец поставил сам, не трогаем.
+    function migrate() {
+      var v = Number(read(SEED_VERSION_KEY, function () { return 0; }));
+      if (v >= SEED_VERSION) return;
+      ['materials', 'trucks'].forEach(function (name) {
+        var raw = storage.getItem(KEYS[name]);
+        if (raw == null) return;
+        var list;
+        try { list = JSON.parse(raw); } catch (e) { return; }
+        var fresh = seed[name]();
+        list.forEach(function (it) {
+          var s = fresh.find(function (x) { return x.id === it.id; });
+          if (s && (!it.image || OLD_SEED_IMAGES.indexOf(it.image) >= 0)) it.image = s.image;
+        });
+        write(KEYS[name], list);
+      });
+      write(SEED_VERSION_KEY, SEED_VERSION);
+    }
+    migrate();
 
     function load(name) {
       var v = read(KEYS[name], function () { return null; });

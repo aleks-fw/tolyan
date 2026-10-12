@@ -236,8 +236,8 @@
       var qty = input('text', { inputmode: 'decimal', placeholder: 'Количество', 'aria-label': 'Количество', autocomplete: 'off' });
       var unit = el('span', { class: 'line-unit muted' });
       var sum = el('span', { class: 'line-sum' });
-      var rm = el('button', { class: 'icon-btn line-remove', type: 'button', 'aria-label': 'Убрать строку', text: '×' });
-      var row = el('div', { class: 'line-row' }, [select, el('div', { class: 'line-qty' }, [qty, unit]), sum, rm]);
+      var rm = el('button', { type: 'button' }); // не показывается: в публичной форме один материал на заказ
+      var row = el('div', { class: 'line-row' }, [select, el('div', { class: 'line-qty' }, [qty, unit]), sum]);
       var rec = { select: select, qty: qty, row: row };
       rows.push(rec);
       linesHost.appendChild(row);
@@ -304,7 +304,7 @@
     var form = el('form', { class: 'order-card', novalidate: true }, [
       el('div', { class: 'order-block' }, [
         el('h3', { text: 'Что везти' }),
-        linesHost, linesError, addBtn
+        linesHost, linesError
       ]),
       el('div', { class: 'order-block' }, [
         el('h3', { text: 'Куда и когда' }),
