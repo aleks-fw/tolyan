@@ -147,15 +147,25 @@
   // ready: Promise, после которого страница имеет окончательную высоту.
   function keepScroll(key, ready) {
     try { history.scrollRestoration = 'manual'; } catch (e) { /* не критично */ }
-    function save() { try { sessionStorage.setItem(key, String(Math.round(window.scrollY))); } catch (e) { /* без хранилища тоже ок */ } }
+    // Хранится «позиция|время»: время нужно, чтобы не возвращать на старое место через час.
+    function save() {
+      try { sessionStorage.setItem(key, Math.round(window.scrollY) + '|' + Date.now()); } catch (e) { /* без хранилища тоже ок */ }
+    }
     window.addEventListener('pagehide', save);
     document.addEventListener('visibilitychange', function () { if (document.visibilityState === 'hidden') save(); });
 
+    var raw = '';
+    try { raw = sessionStorage.getItem(key) || ''; } catch (e) { raw = ''; }
+    var parts = raw.split('|');
+    var saved = Number(parts[0]) || 0, age = Date.now() - (Number(parts[1]) || 0);
+
     var nav = performance.getEntriesByType && performance.getEntriesByType('navigation')[0];
-    var returning = nav && (nav.type === 'reload' || nav.type === 'back_forward');
-    var saved = 0;
-    try { saved = Number(sessionStorage.getItem(key)) || 0; } catch (e) { saved = 0; }
-    if (!returning || saved <= 0) return;
+    var type = nav ? nav.type : 'navigate';
+    // Обновление и «назад» восстанавливаем всегда. Повторное открытие этого же адреса в той же вкладке
+    // (Enter в адресной строке, закладка, мобильный браузер) считается новым переходом: возвращаем,
+    // если это было недавно и в адресе нет якоря (#trucks), к которому человек шёл сам.
+    var restore = type === 'reload' || type === 'back_forward' || (type === 'navigate' && !location.hash && age < 30 * 60 * 1000);
+    if (!restore || saved <= 0) return;
 
     Promise.resolve(ready).then(function () {
       requestAnimationFrame(function () {
