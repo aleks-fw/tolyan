@@ -67,7 +67,7 @@
     var title = el('h2', { id: titleId, class: 'modal-title', text: opts.title || '' });
     var closeBtn = el('button', { class: 'icon-btn', type: 'button', 'aria-label': 'Закрыть окно', text: '×' });
     var bodyHost = el('div', { class: 'modal-body' });
-    var dialog = el('div', { class: 'modal', role: 'dialog', 'aria-modal': 'true', 'aria-labelledby': titleId }, [
+    var dialog = el('div', { class: 'modal' + (opts.wide ? ' modal-wide' : ''), role: 'dialog', 'aria-modal': 'true', 'aria-labelledby': titleId }, [
       el('div', { class: 'modal-head' }, [title, closeBtn]), bodyHost
     ]);
     var backdrop = el('div', { class: 'modal-backdrop' }, [dialog]);

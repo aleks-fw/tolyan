@@ -214,7 +214,8 @@
 
   /* ---------- форма доставки ---------- */
 
-  function buildDeliveryForm(host) {
+  // host: куда вставить форму; onDone(order): вызывается после успешного сохранения.
+  function buildDeliveryForm(host, onDone) {
     var f = contactFields({ addressLabel: 'Адрес доставки', timeRequired: false });
     var linesHost = el('div', { class: 'lines' });
     var linesError = el('p', { class: 'field-error', 'aria-live': 'polite' });
@@ -346,7 +347,7 @@
           showErrors(f, map);
         },
         fallbackText: function () { return previewMessage(p); },
-        onDone: function (order) { reset(); showDone(order); }
+        onDone: function (order) { reset(); onDone(order); }
       });
     });
 
@@ -461,24 +462,28 @@
 
   /* ---------- запуск ---------- */
 
-  var delivery = null;
+  var deliveryOpen = false;
+
+  // Форма доставки открывается в отдельном окне; materialId (необязательно) сразу выбирается в списке.
+  function openDelivery(materialId) {
+    if (deliveryOpen) return;
+    deliveryOpen = true;
+    refresh().then(function () {
+      var host = el('div');
+      var m = ui.modal({ title: 'Оформление доставки', body: host, wide: true, onClose: function () { deliveryOpen = false; } });
+      var form = buildDeliveryForm(host, function (order) { m.close(); showDone(order); });
+      if (materialId) form.selectMaterial(materialId);
+    }, function () { deliveryOpen = false; ui.toast('Не удалось загрузить каталог. Обновите страницу.', { error: true }); });
+  }
 
   function init() {
-    var host = document.getElementById('delivery-host');
-    refresh().then(function () {
-      if (host) delivery = buildDeliveryForm(host);
+    document.addEventListener('click', function (e) {
+      if (e.target.closest('[data-open-delivery]')) openDelivery();
     });
     document.addEventListener('tolyan:book-truck', function (e) {
       refresh().then(function () { openBooking(e.detail.id); });
     });
-    document.addEventListener('tolyan:order-material', function (e) {
-      refresh().then(function () {
-        if (delivery) delivery.rebuild();
-        var section = document.getElementById('order');
-        if (section) section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        if (delivery) delivery.selectMaterial(e.detail.id);
-      });
-    });
+    document.addEventListener('tolyan:order-material', function (e) { openDelivery(e.detail.id); });
   }
 
   document.addEventListener('DOMContentLoaded', init);

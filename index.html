@@ -26,15 +26,15 @@
       <nav class="main-nav" id="main-nav" aria-label="Разделы сайта">
         <a href="#trucks">Машины</a>
         <a href="#materials">Материалы</a>
-        <a href="#order">Оформление</a>
         <a href="#contacts">Контакты</a>
+        <button class="btn btn-primary nav-cta" type="button" data-open-delivery>Заказать доставку</button>
       </nav>
 
       <div class="header-actions">
         <button class="icon-btn theme-toggle" type="button" data-theme-toggle aria-pressed="false" aria-label="Включить тёмную тему">
           <span class="theme-icon" aria-hidden="true"></span>
         </button>
-        <a class="btn btn-primary header-cta" href="#order">Заказать доставку</a>
+        <button class="btn btn-primary header-cta" type="button" data-open-delivery>Заказать доставку</button>
         <button class="icon-btn nav-toggle" type="button" id="nav-toggle" aria-expanded="false" aria-controls="main-nav" aria-label="Открыть меню">
           <span class="burger" aria-hidden="true"></span>
         </button>
@@ -49,7 +49,7 @@
           <h1 data-setting="hero_title">Грузовики и стройматериалы с доставкой на объект</h1>
           <p class="hero-lead" data-setting="hero_subtitle">Арендуйте машину на нужные часы или закажите песок, щебень и грунт. Привезём вовремя, цена видна сразу.</p>
           <div class="hero-cta">
-            <a class="btn btn-primary btn-lg" href="#order">Заказать доставку</a>
+            <button class="btn btn-primary btn-lg" type="button" data-open-delivery>Заказать доставку</button>
             <a class="btn btn-outline btn-lg" href="#trucks">Выбрать машину</a>
           </div>
         </div>
@@ -91,17 +91,7 @@
       </div>
     </section>
 
-    <section class="section section-alt" id="order" aria-labelledby="order-title">
-      <div class="container order-wrap">
-        <div class="section-head reveal">
-          <h2 id="order-title">Оформление доставки</h2>
-          <p class="muted">Выберите материал, укажите адрес и дату. Итог посчитаем сразу, а текст заказа можно будет отправить в Telegram.</p>
-        </div>
-        <div id="delivery-host"><div class="skeleton skeleton-card"></div></div>
-      </div>
-    </section>
-
-    <section class="section" id="contacts" aria-labelledby="contacts-title">
+    <section class="section section-alt" id="contacts" aria-labelledby="contacts-title">
       <div class="container contacts-grid">
         <div class="reveal">
           <h2 id="contacts-title">Контакты</h2>

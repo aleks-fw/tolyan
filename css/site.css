@@ -119,7 +119,10 @@
 .empty-state { grid-column: 1 / -1; padding: var(--space-6); border: 1px dashed var(--border); border-radius: var(--r-lg); text-align: center; color: var(--muted); }
 
 /* Оформление доставки и модальные формы */
-.order-wrap { max-width: 880px; }
+.modal-wide { max-width: 720px; }
+.modal .order-card { padding: 0; border: 0; box-shadow: none; background: none; }
+.nav-cta { display: none; }
+@media (max-width: 899px) { .nav-cta { display: inline-flex; margin-top: var(--space-3); } }
 .order-card { display: grid; gap: var(--space-5); padding: var(--space-5); background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-lg); box-shadow: var(--shadow-sm); }
 .order-block { display: grid; gap: var(--space-3); }
 .order-block h3 { font-size: var(--fs-lg); }

@@ -105,7 +105,7 @@
       toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
       toggle.setAttribute('aria-label', open ? 'Закрыть меню' : 'Открыть меню');
     });
-    nav.addEventListener('click', function (e) { if (e.target.closest('a')) close(); });
+    nav.addEventListener('click', function (e) { if (e.target.closest('a, button')) close(); });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
   }
 
