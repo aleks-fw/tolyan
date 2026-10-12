@@ -6,6 +6,9 @@
   var cache = { materials: [], trucks: [], settings: {} };
   var uidCounter = 0;
 
+  // Мышь/трекпад (а не палец): только тогда сами ставим курсор в поле.
+  function finePointer() { return !!(window.matchMedia && window.matchMedia('(pointer: fine)').matches); }
+
   function today() {
     var d = new Date();
     return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
@@ -356,13 +359,14 @@
     applyNote();
 
     return {
+      focusFirst: function () { if (rows[0]) rows[0].select.focus(); },
       selectMaterial: function (id) {
         var empty = rows.find(function (r) { return !r.select.value; });
         var same = rows.find(function (r) { return r.select.value === id; });
         var rec = same || empty || (rows.length < 8 ? addRow(id) : null);
         if (!rec) return;
         rec.select.value = id; rec.select.dispatchEvent(new Event('change'));
-        rec.qty.focus();
+        if (finePointer()) rec.qty.focus();   // на телефоне не открываем клавиатуру сами
       },
       rebuild: function () {
         // Каталог мог измениться: пересобрать строки с сохранением выбора.
@@ -473,6 +477,7 @@
       var m = ui.modal({ title: 'Оформление доставки', body: host, wide: true, onClose: function () { deliveryOpen = false; } });
       var form = buildDeliveryForm(host, function (order) { m.close(); showDone(order); });
       if (materialId) form.selectMaterial(materialId);
+      else if (finePointer()) form.focusFirst();
     }, function () { deliveryOpen = false; ui.toast('Не удалось загрузить каталог. Обновите страницу.', { error: true }); });
   }
 

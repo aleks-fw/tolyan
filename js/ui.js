@@ -98,8 +98,13 @@
     document.addEventListener('keydown', onKey, true);
     document.body.appendChild(backdrop);
     document.body.classList.add('modal-open');
-    var firstField = dialog.querySelector('input,select,textarea') || closeBtn;
-    firstField.focus();
+    // На телефонах фокус в поле открывает клавиатуру и приближает страницу, поэтому фокусируем само окно.
+    // На компьютере (точная мышь) по-прежнему сразу ставим курсор в первое поле.
+    dialog.setAttribute('tabindex', '-1');
+    var finePointer = window.matchMedia && window.matchMedia('(pointer: fine)').matches;
+    var firstField = dialog.querySelector('input,select,textarea');
+    if (finePointer && firstField && !firstField.readOnly) firstField.focus();
+    else dialog.focus({ preventScroll: true });
     return { el: dialog, close: close, setBody: setBody, setTitle: function (t) { title.textContent = t; } };
   }
 

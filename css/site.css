@@ -169,3 +169,9 @@
 .footer-inner { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--space-3); }
 .site-footer a { color: var(--muted); }
 .site-footer a:hover { color: var(--accent-text); }
+
+/* iOS приближает страницу, когда фокус получает поле со шрифтом меньше 16px: на сенсорных экранах не уменьшаем. */
+.modal:focus { outline: none; }
+@media (pointer: coarse), (max-width: 899px) {
+  input, select, textarea, .input, .select, .textarea, .order-text { font-size: 16px; }
+}

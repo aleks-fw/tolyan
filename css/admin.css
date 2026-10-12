@@ -100,3 +100,9 @@ label.btn .file-input { position: absolute; width: 1px; height: 1px; opacity: 0;
 .image-field { display: grid; gap: var(--space-2); }
 .image-row { display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: center; }
 .image-preview { width: 160px; height: 100px; object-fit: cover; border-radius: var(--r-md); border: 1px solid var(--border); }
+
+/* iOS приближает страницу, когда фокус получает поле со шрифтом меньше 16px: на сенсорных экранах не уменьшаем. */
+.modal:focus { outline: none; }
+@media (pointer: coarse), (max-width: 899px) {
+  input, select, textarea, .input, .select, .textarea, .order-text { font-size: 16px; }
+}
