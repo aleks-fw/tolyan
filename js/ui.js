@@ -142,6 +142,31 @@
     });
   }
 
+  // Запоминает позицию прокрутки и возвращает её после обновления страницы (F5) или перехода назад.
+  // Содержимое рисуется асинхронно, поэтому штатное восстановление браузера срабатывает слишком рано.
+  // ready: Promise, после которого страница имеет окончательную высоту.
+  function keepScroll(key, ready) {
+    try { history.scrollRestoration = 'manual'; } catch (e) { /* не критично */ }
+    function save() { try { sessionStorage.setItem(key, String(Math.round(window.scrollY))); } catch (e) { /* без хранилища тоже ок */ } }
+    window.addEventListener('pagehide', save);
+    document.addEventListener('visibilitychange', function () { if (document.visibilityState === 'hidden') save(); });
+
+    var nav = performance.getEntriesByType && performance.getEntriesByType('navigation')[0];
+    var returning = nav && (nav.type === 'reload' || nav.type === 'back_forward');
+    var saved = 0;
+    try { saved = Number(sessionStorage.getItem(key)) || 0; } catch (e) { saved = 0; }
+    if (!returning || saved <= 0) return;
+
+    Promise.resolve(ready).then(function () {
+      requestAnimationFrame(function () {
+        var root = document.documentElement, prev = root.style.scrollBehavior;
+        root.style.scrollBehavior = 'auto';             // без плавной прокрутки к сохранённому месту
+        window.scrollTo(0, saved);
+        root.style.scrollBehavior = prev;
+      });
+    });
+  }
+
   T.ui = { el: el, toast: toast, reveal: reveal, image: image, modal: modal, copyText: copyText,
-           fileToDataUrl: fileToDataUrl };
+           fileToDataUrl: fileToDataUrl, keepScroll: keepScroll };
 })();

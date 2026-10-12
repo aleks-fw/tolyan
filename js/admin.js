@@ -131,9 +131,10 @@
       panel.setAttribute('aria-labelledby', 'tab-' + tab.id);
       history.replaceState(null, '', '#' + tab.id);
       panel.replaceChildren(el('p', { class: 'muted', text: 'Загрузка...' }));
-      Promise.resolve(tab.render(panel)).catch(function (e) {
+      var rendering = Promise.resolve(tab.render(panel)).catch(function (e) {
         panel.replaceChildren(el('p', { class: 'form-alert', text: 'Не удалось загрузить раздел: ' + A.errorText(e) }));
       });
+      if (!A.firstRender) A.firstRender = rendering;
       A.refreshBadges();
     }
 
@@ -155,5 +156,6 @@
     logoutBtn = document.getElementById('logout');
     logoutBtn.addEventListener('click', function () { store.logout().then(showLogin); });
     store.isAdmin().then(function (ok) { if (ok) showApp(); else showLogin(); });
+    ui.keepScroll('tolyan.admin.scroll', store.isAdmin().then(function () { return A.firstRender; }));
   };
 })();

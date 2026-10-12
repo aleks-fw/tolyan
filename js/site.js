@@ -138,7 +138,7 @@
     initNav();
     initActions();
     ui.reveal(document);
-    load();
+    ui.keepScroll('tolyan.scroll', load());
   });
 
   T.site = { reload: load };
