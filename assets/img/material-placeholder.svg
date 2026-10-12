@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" role="img" aria-label="Материал">
+  <rect width="640" height="400" fill="#fff1e6"/>
+  <rect y="300" width="640" height="100" fill="#fed7aa"/>
+  <path d="M120 320 L320 120 L520 320 Z" fill="#f97316"/>
+  <path d="M220 320 L400 160 L560 320 Z" fill="#ea580c" opacity=".85"/>
+  <g fill="#fff1e6" opacity=".7"><circle cx="300" cy="250" r="6"/><circle cx="350" cy="280" r="5"/><circle cx="270" cy="290" r="4"/><circle cx="400" cy="300" r="6"/><circle cx="320" cy="200" r="4"/></g>
+</svg>

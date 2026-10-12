@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" role="img" aria-label="Грузовик">
+  <rect width="640" height="400" fill="#fff1e6"/>
+  <rect y="300" width="640" height="100" fill="#fed7aa"/>
+  <rect x="60" y="150" width="300" height="120" rx="8" fill="#f97316"/>
+  <path d="M370 190h110l50 50v30H370z" fill="#ea580c"/>
+  <path d="M390 205h78l32 32h-110z" fill="#fff1e6"/>
+  <rect x="50" y="270" width="500" height="14" rx="4" fill="#1c1917"/>
+  <circle cx="140" cy="292" r="34" fill="#1c1917"/><circle cx="140" cy="292" r="14" fill="#a8a29e"/>
+  <circle cx="260" cy="292" r="34" fill="#1c1917"/><circle cx="260" cy="292" r="14" fill="#a8a29e"/>
+  <circle cx="470" cy="292" r="34" fill="#1c1917"/><circle cx="470" cy="292" r="14" fill="#a8a29e"/>
+</svg>
