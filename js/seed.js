@@ -38,7 +38,6 @@
       work_hours: 'Ежедневно, 08:00-20:00',
       telegram_username: 'tolyan_demo',
       hero_image: 'assets/img/hero.jpg',
-      address_suggest: true,
       hero_title: 'Грузовики и стройматериалы с доставкой на объект',
       hero_subtitle: 'Арендуйте машину на нужные часы или закажите песок, щебень и грунт. Привезём вовремя, цена видна сразу.',
       advantages: [
