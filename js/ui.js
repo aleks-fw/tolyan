@@ -58,5 +58,68 @@
     return img;
   }
 
-  T.ui = { el: el, toast: toast, reveal: reveal, image: image };
+  var FOCUSABLE = 'a[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])';
+
+  // modal({ title, body: Node }) -> { el, close, setBody, setTitle }
+  function modal(opts) {
+    var prev = document.activeElement;
+    var titleId = 'modal-title-' + Math.random().toString(36).slice(2, 7);
+    var title = el('h2', { id: titleId, class: 'modal-title', text: opts.title || '' });
+    var closeBtn = el('button', { class: 'icon-btn', type: 'button', 'aria-label': 'Закрыть окно', text: '×' });
+    var bodyHost = el('div', { class: 'modal-body' });
+    var dialog = el('div', { class: 'modal', role: 'dialog', 'aria-modal': 'true', 'aria-labelledby': titleId }, [
+      el('div', { class: 'modal-head' }, [title, closeBtn]), bodyHost
+    ]);
+    var backdrop = el('div', { class: 'modal-backdrop' }, [dialog]);
+    var closed = false;
+
+    function setBody(node) { bodyHost.replaceChildren(node); }
+    function close() {
+      if (closed) return; closed = true;
+      document.removeEventListener('keydown', onKey, true);
+      backdrop.remove();
+      if (!document.querySelector('.modal-backdrop')) document.body.classList.remove('modal-open');
+      if (prev && prev.focus) prev.focus();
+      if (opts.onClose) opts.onClose();
+    }
+    function onKey(e) {
+      if (e.key === 'Escape') { e.stopPropagation(); close(); return; }
+      if (e.key !== 'Tab') return;
+      var f = dialog.querySelectorAll(FOCUSABLE);
+      if (!f.length) return;
+      var first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
+
+    setBody(opts.body || el('div'));
+    closeBtn.addEventListener('click', close);
+    backdrop.addEventListener('mousedown', function (e) { if (e.target === backdrop) close(); });
+    document.addEventListener('keydown', onKey, true);
+    document.body.appendChild(backdrop);
+    document.body.classList.add('modal-open');
+    var firstField = dialog.querySelector('input,select,textarea') || closeBtn;
+    firstField.focus();
+    return { el: dialog, close: close, setBody: setBody, setTitle: function (t) { title.textContent = t; } };
+  }
+
+  // Копирование в буфер: Clipboard API, запасной путь через временный textarea.
+  function copyText(text) {
+    if (navigator.clipboard && window.isSecureContext) {
+      return navigator.clipboard.writeText(text).then(function () { return true; }, function () { return legacyCopy(text); });
+    }
+    return Promise.resolve(legacyCopy(text));
+  }
+  function legacyCopy(text) {
+    var ta = el('textarea', { 'aria-hidden': 'true', style: 'position:fixed;left:-9999px;top:0' });
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    var okay = false;
+    try { okay = document.execCommand('copy'); } catch (e) { okay = false; }
+    ta.remove();
+    return okay;
+  }
+
+  T.ui = { el: el, toast: toast, reveal: reveal, image: image, modal: modal, copyText: copyText };
 })();

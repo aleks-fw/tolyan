@@ -118,6 +118,38 @@
 @keyframes shimmer { from { background-position: 200% 0; } to { background-position: -200% 0; } }
 .empty-state { grid-column: 1 / -1; padding: var(--space-6); border: 1px dashed var(--border); border-radius: var(--r-lg); text-align: center; color: var(--muted); }
 
+/* Оформление доставки и модальные формы */
+.order-wrap { max-width: 880px; }
+.order-card { display: grid; gap: var(--space-5); padding: var(--space-5); background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-lg); box-shadow: var(--shadow-sm); }
+.order-block { display: grid; gap: var(--space-3); }
+.order-block h3 { font-size: var(--fs-lg); }
+.lines { display: grid; gap: var(--space-3); }
+.line-row { display: grid; gap: var(--space-2); grid-template-columns: 1fr auto; align-items: center; padding: var(--space-3); border: 1px solid var(--border); border-radius: var(--r-md); background: var(--surface-2); }
+.line-row .select { grid-column: 1 / -1; }
+.line-qty { display: flex; align-items: center; gap: var(--space-2); min-width: 0; }
+.line-qty .input { min-width: 0; }
+.line-unit { min-width: 2ch; }
+.line-sum { font-weight: 700; text-align: right; grid-column: 1 / 2; }
+.line-remove { width: 40px; height: 40px; font-size: 1.25rem; }
+@media (min-width: 640px) {
+  .line-row { grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr) 110px 40px; }
+  .line-row .select { grid-column: auto; }
+  .line-sum { grid-column: auto; }
+}
+.order-total { display: grid; gap: var(--space-1); font-size: var(--fs-lg); padding-top: var(--space-4); border-top: 1px solid var(--border); }
+.order-total strong { font-size: var(--fs-h3); }
+.order-submit { display: flex; justify-content: flex-end; }
+.modal-form { margin-top: var(--space-3); }
+.order-text { font-family: ui-monospace, "Cascadia Mono", Consolas, monospace; font-size: var(--fs-sm); line-height: 1.5; margin: var(--space-3) 0; }
+.done-note { margin-top: var(--space-2); }
+.summary-list { margin: 0; display: grid; gap: var(--space-3); }
+.summary-list > div { display: grid; gap: .1rem; padding-bottom: var(--space-3); border-bottom: 1px solid var(--border); }
+.summary-list dt { color: var(--muted); font-size: var(--fs-sm); }
+.summary-list dd { margin: 0; font-weight: 600; overflow-wrap: anywhere; }
+.modal-title { font-size: var(--fs-h3); }
+.modal .form-alert { margin-top: var(--space-3); display: grid; gap: var(--space-2); justify-items: start; }
+.order-card .form-alert { display: grid; gap: var(--space-2); justify-items: start; }
+
 /* Контакты */
 .contacts-grid { display: grid; gap: var(--space-6); }
 .contacts-lead { margin-top: var(--space-2); max-width: 36ch; }

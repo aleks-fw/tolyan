@@ -91,9 +91,17 @@
       </div>
     </section>
 
-    <!-- Секция #order (форма доставки) добавляется на этапе 3. -->
+    <section class="section section-alt" id="order" aria-labelledby="order-title">
+      <div class="container order-wrap">
+        <div class="section-head reveal">
+          <h2 id="order-title">Оформление доставки</h2>
+          <p class="muted">Выберите материал, укажите адрес и дату. Итог посчитаем сразу, а текст заказа можно будет отправить в Telegram.</p>
+        </div>
+        <div id="delivery-host"><div class="skeleton skeleton-card"></div></div>
+      </div>
+    </section>
 
-    <section class="section section-alt" id="contacts" aria-labelledby="contacts-title">
+    <section class="section" id="contacts" aria-labelledby="contacts-title">
       <div class="container contacts-grid">
         <div class="reveal">
           <h2 id="contacts-title">Контакты</h2>
@@ -121,5 +129,6 @@
   <script src="js/store.js"></script>
   <script src="js/ui.js"></script>
   <script src="js/site.js"></script>
+  <script src="js/orders.js"></script>
 </body>
 </html>
