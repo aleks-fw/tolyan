@@ -142,41 +142,38 @@
     });
   }
 
-  // Запоминает позицию прокрутки и возвращает её после обновления страницы (F5) или перехода назад.
-  // Содержимое рисуется асинхронно, поэтому штатное восстановление браузера срабатывает слишком рано.
-  // ready: Promise, после которого страница имеет окончательную высоту.
-  function keepScroll(key, ready) {
-    try { history.scrollRestoration = 'manual'; } catch (e) { /* не критично */ }
-    // Хранится «позиция|время»: время нужно, чтобы не возвращать на старое место через час.
-    function save() {
-      try { sessionStorage.setItem(key, Math.round(window.scrollY) + '|' + Date.now()); } catch (e) { /* без хранилища тоже ок */ }
-    }
-    window.addEventListener('pagehide', save);
-    document.addEventListener('visibilitychange', function () { if (document.visibilityState === 'hidden') save(); });
-
-    var raw = '';
-    try { raw = sessionStorage.getItem(key) || ''; } catch (e) { raw = ''; }
-    var parts = raw.split('|');
-    var saved = Number(parts[0]) || 0, age = Date.now() - (Number(parts[1]) || 0);
-
+  // При обновлении страницы (F5, потянуть вниз) всегда начинаем сверху.
+  // Содержимое рисуется асинхронно, поэтому ещё раз поднимаемся наверх, когда ready выполнится.
+  // opts.stripHash: убрать якорь (#trucks) из адреса при обновлении, чтобы не прыгать к нему.
+  function startAtTopOnReload(ready, opts) {
     var nav = performance.getEntriesByType && performance.getEntriesByType('navigation')[0];
-    var type = nav ? nav.type : 'navigate';
-    // Обновление и «назад» восстанавливаем всегда. Повторное открытие этого же адреса в той же вкладке
-    // (Enter в адресной строке, закладка, мобильный браузер) считается новым переходом: возвращаем,
-    // если это было недавно и в адресе нет якоря (#trucks), к которому человек шёл сам.
-    var restore = type === 'reload' || type === 'back_forward' || (type === 'navigate' && !location.hash && age < 30 * 60 * 1000);
-    if (!restore || saved <= 0) return;
+    if (!nav || nav.type !== 'reload') return;       // обычный вход и «назад» не трогаем
+    try { history.scrollRestoration = 'manual'; } catch (e) { /* не критично */ }
+    if (opts && opts.stripHash && location.hash) {
+      try { history.replaceState(null, '', location.pathname + location.search); } catch (e) { /* ignore */ }
+    }
+    function top() {
+      var root = document.documentElement, prev = root.style.scrollBehavior;
+      root.style.scrollBehavior = 'auto';
+      window.scrollTo(0, 0);
+      root.style.scrollBehavior = prev;
+    }
+    top();
+    window.addEventListener('load', top);             // браузер мог вернуть позицию после загрузки картинок
+    Promise.resolve(ready).then(function () { requestAnimationFrame(top); });
 
-    Promise.resolve(ready).then(function () {
-      requestAnimationFrame(function () {
-        var root = document.documentElement, prev = root.style.scrollBehavior;
-        root.style.scrollBehavior = 'auto';             // без плавной прокрутки к сохранённому месту
-        window.scrollTo(0, saved);
-        root.style.scrollBehavior = prev;
-      });
+    // Браузер иногда возвращает старую позицию с запозданием. Пока человек сам ничего не прокручивал,
+    // в течение 2 секунд возвращаем страницу наверх, если она «уехала».
+    var touched = false, until = Date.now() + 2000;
+    ['wheel', 'touchstart', 'keydown', 'mousedown'].forEach(function (ev) {
+      window.addEventListener(ev, function () { touched = true; }, { once: true, passive: true });
     });
+    (function guard() {
+      if (touched || Date.now() > until) return;
+      if (window.scrollY !== 0) top();
+      requestAnimationFrame(guard);
+    })();
   }
-
   T.ui = { el: el, toast: toast, reveal: reveal, image: image, modal: modal, copyText: copyText,
-           fileToDataUrl: fileToDataUrl, keepScroll: keepScroll };
+           fileToDataUrl: fileToDataUrl, startAtTopOnReload: startAtTopOnReload };
 })();

@@ -156,6 +156,6 @@
     logoutBtn = document.getElementById('logout');
     logoutBtn.addEventListener('click', function () { store.logout().then(showLogin); });
     store.isAdmin().then(function (ok) { if (ok) showApp(); else showLogin(); });
-    ui.keepScroll('tolyan.admin.scroll', store.isAdmin().then(function () { return A.firstRender; }));
+    ui.startAtTopOnReload(store.isAdmin().then(function () { return A.firstRender; }));
   };
 })();

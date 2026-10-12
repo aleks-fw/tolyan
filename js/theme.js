@@ -3,6 +3,13 @@
   var KEY = 'tolyan-theme';
   var root = document.documentElement;
 
+  // При обновлении страницы начинаем сверху: отключаем восстановление прокрутки как можно раньше,
+  // до того как браузер успеет вернуть старую позицию.
+  try {
+    var navEntry = performance.getEntriesByType('navigation')[0];
+    if (navEntry && navEntry.type === 'reload') history.scrollRestoration = 'manual';
+  } catch (e) { /* не критично */ }
+
   function saved() {
     try { var v = localStorage.getItem(KEY); return v === 'dark' || v === 'light' ? v : null; }
     catch (e) { return null; }
