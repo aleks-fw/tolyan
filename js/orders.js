@@ -53,6 +53,9 @@
       phone: field('Телефон', input('tel', { autocomplete: 'tel', inputmode: 'tel', placeholder: '+7 900 123-45-67' })),
       comment: field('Комментарий', el('textarea', { class: 'textarea', maxlength: '500', rows: '3' }), { span: true })
     };
+    if (T.addressSuggest) {
+      T.addressSuggest.attach(f.address.input, function () { return cache.settings.address_suggest !== false; });
+    }
     f.phone.input.addEventListener('blur', function () {
       var r = V.phone(f.phone.input.value);
       if (r.ok) f.phone.input.value = V.formatPhone(r.value);

@@ -83,7 +83,11 @@
       if (opts.onClose) opts.onClose();
     }
     function onKey(e) {
-      if (e.key === 'Escape') { e.stopPropagation(); close(); return; }
+      if (e.key === 'Escape') {
+        // Открытый список подсказок закрывается первым, окно остаётся.
+        if (e.target && e.target.getAttribute && e.target.getAttribute('aria-expanded') === 'true') return;
+        e.stopPropagation(); close(); return;
+      }
       if (e.key !== 'Tab') return;
       var f = dialog.querySelectorAll(FOCUSABLE);
       if (!f.length) return;

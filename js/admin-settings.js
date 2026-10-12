@@ -55,10 +55,15 @@
       f.telegram_username.input.addEventListener('input', updatePreview);
       updatePreview();
 
+      var suggest = el('input', { type: 'checkbox', checked: s.address_suggest !== false });
+      var suggestRow = el('label', { class: 'check span-2' }, [suggest,
+        el('span', { text: 'Подсказывать адреса при вводе (поиск по OpenStreetMap, сервис Photon)' })]);
       var save = el('button', { class: 'btn btn-primary btn-lg', type: 'submit', text: 'Сохранить настройки' });
       var form = el('form', { class: 'settings-form', novalidate: true }, [
         section('Компания', null, [f.company_name.root, f.tagline.root]),
         section('Контакты', null, [f.phone.root, f.email.root, f.address.root, f.work_hours.root]),
+        section('Подсказки адреса', 'Пока клиент вводит адрес, введённый текст отправляется во внешний сервис подсказок. Отключите, если это нежелательно.',
+          [suggestRow]),
         section('Telegram', 'Заказы сохраняются в базу в любом случае. Ник нужен для кнопок «Открыть Telegram» и «Отправить заказ».',
           [f.telegram_username.root, el('div', { class: 'span-2' }, [tgPreview])]),
         section('Тексты главной страницы', null, [f.hero_title.root, f.hero_subtitle.root, hero.root,
@@ -74,7 +79,7 @@
         if (!tg.ok) { f.telegram_username.setError(tg.error); f.telegram_username.input.focus(); return; }
         if (!f.company_name.input.value.trim()) { f.company_name.setError('Укажите название компании'); f.company_name.input.focus(); return; }
         save.disabled = true;
-        var patch = { hero_image: hero.getValue() || '', telegram_username: tg.value,
+        var patch = { hero_image: hero.getValue() || '', telegram_username: tg.value, address_suggest: suggest.checked,
           advantages: advFields.map(function (p) { return { title: p.title.input.value.trim(), text: p.text.input.value.trim() }; })
                               .filter(function (a) { return a.title || a.text; }) };
         Object.keys(f).forEach(function (k) { if (k !== 'telegram_username') patch[k] = f[k].input.value.trim(); });
