@@ -129,3 +129,7 @@ body.modal-open { overflow: hidden; }
   .reveal { opacity: 1; transform: none; }
   .btn:hover, .card.is-hoverable:hover { transform: none; }
 }
+
+/* iPhone: быстрое двойное касание по кнопке или полю приближало страницу. manipulate = прокрутка и щипок
+   работают, а «зум двойным тапом» отключён. */
+html, body, a, button, input, select, textarea, label, .modal, .modal-backdrop { touch-action: manipulation; }
