@@ -81,7 +81,7 @@ const delivery = {
 
 test('order-message: доставка', () => {
   const t = om.buildOrderMessage(delivery, 'Толян');
-  assert.match(t, /^Заказ №12 — «Толян»/);
+  assert.match(t, /^Заказ №12, «Толян»/);
   assert.match(t, /Тип: Доставка материалов/);
   assert.match(t, /- Песок карьерный: 10 т × 450.₽ = 4.500.₽/);
   assert.match(t, /- Отсев: 2,50 т|- Отсев: 2\.5 т|- Отсев: 2,5 т/);

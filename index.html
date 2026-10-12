@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="ru" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Толян: аренда грузовиков и доставка стройматериалов</title>
+  <meta name="description" content="Аренда грузовиков по часам и доставка песка, щебня, отсева и грунта. Цены и наличие видны сразу, заказ за пару минут.">
+  <meta name="theme-color" content="#f97316">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23f97316'/%3E%3Ctext x='16' y='23' font-family='Arial' font-weight='800' font-size='20' text-anchor='middle' fill='%231c1917'%3E%D0%A2%3C/text%3E%3C/svg%3E">
+  <link rel="preload" as="image" href="assets/img/hero.jpg">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/site.css">
+  <script src="js/theme.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">К содержимому</a>
+
+  <header class="site-header" id="top">
+    <div class="container header-inner">
+      <a class="logo" href="#top" aria-label="Толян, на главную">
+        <span class="logo-mark" aria-hidden="true">Т</span>
+        <span class="logo-text" data-setting="company_name">Толян</span>
+      </a>
+
+      <nav class="main-nav" id="main-nav" aria-label="Разделы сайта">
+        <a href="#trucks">Машины</a>
+        <a href="#materials">Материалы</a>
+        <a href="#order">Оформление</a>
+        <a href="#contacts">Контакты</a>
+      </nav>
+
+      <div class="header-actions">
+        <button class="icon-btn theme-toggle" type="button" data-theme-toggle aria-pressed="false" aria-label="Включить тёмную тему">
+          <span class="theme-icon" aria-hidden="true"></span>
+        </button>
+        <a class="btn btn-primary header-cta" href="#order">Заказать доставку</a>
+        <button class="icon-btn nav-toggle" type="button" id="nav-toggle" aria-expanded="false" aria-controls="main-nav" aria-label="Открыть меню">
+          <span class="burger" aria-hidden="true"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <h1 data-setting="hero_title">Грузовики и стройматериалы с доставкой на объект</h1>
+          <p class="hero-lead" data-setting="hero_subtitle">Арендуйте машину на нужные часы или закажите песок, щебень и грунт. Привезём вовремя, цена видна сразу.</p>
+          <div class="hero-cta">
+            <a class="btn btn-primary btn-lg" href="#order">Заказать доставку</a>
+            <a class="btn btn-outline btn-lg" href="#trucks">Выбрать машину</a>
+          </div>
+        </div>
+        <figure class="hero-media">
+          <img id="hero-image" src="assets/img/hero.jpg" width="1400" height="933"
+               alt="Самосвал загружается щебнем из ковша фронтального погрузчика в карьере" fetchpriority="high">
+        </figure>
+      </div>
+    </section>
+
+    <section class="section" id="advantages" aria-labelledby="adv-title">
+      <div class="container">
+        <h2 id="adv-title" class="reveal">Почему выбирают нас</h2>
+        <div class="adv-grid" id="adv-grid"></div>
+      </div>
+    </section>
+
+    <section class="section section-alt" id="trucks" aria-labelledby="trucks-title">
+      <div class="container">
+        <div class="section-head reveal">
+          <h2 id="trucks-title">Машины в аренду</h2>
+          <p class="muted">Цена за час. Выберите свободную машину и забронируйте её на нужное время.</p>
+        </div>
+        <div class="truck-grid" id="truck-grid" aria-live="polite">
+          <div class="skeleton skeleton-card"></div><div class="skeleton skeleton-card"></div><div class="skeleton skeleton-card"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="materials" aria-labelledby="materials-title">
+      <div class="container">
+        <div class="section-head reveal">
+          <h2 id="materials-title">Стройматериалы</h2>
+          <p class="muted">Цена указана за единицу. Остаток обновляется владельцем в админ-панели.</p>
+        </div>
+        <div class="material-grid" id="material-grid" aria-live="polite">
+          <div class="skeleton skeleton-row"></div><div class="skeleton skeleton-row"></div><div class="skeleton skeleton-row"></div><div class="skeleton skeleton-row"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Секция #order (форма доставки) добавляется на этапе 3. -->
+
+    <section class="section section-alt" id="contacts" aria-labelledby="contacts-title">
+      <div class="container contacts-grid">
+        <div class="reveal">
+          <h2 id="contacts-title">Контакты</h2>
+          <p class="muted contacts-lead">Позвоните или напишите в Telegram, ответим в рабочее время.</p>
+        </div>
+        <dl class="contact-list reveal" id="contact-list"></dl>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <span><strong data-setting="company_name">Толян</strong>. <span data-setting="footer_text">Аренда грузовиков и доставка стройматериалов.</span></span>
+      <a href="admin.html">Вход для владельца</a>
+    </div>
+  </footer>
+
+  <div class="toast-host" id="toast-host" role="status" aria-live="polite"></div>
+
+  <script src="js/config.js"></script>
+  <script src="js/lib/calc.js"></script>
+  <script src="js/lib/validate.js"></script>
+  <script src="js/lib/order-message.js"></script>
+  <script src="js/seed.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/site.js"></script>
+</body>
+</html>

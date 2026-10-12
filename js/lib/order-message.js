@@ -31,7 +31,7 @@
   function buildOrderMessage(order, companyName) {
     var rental = order.type === 'rental';
     var lines = [];
-    lines.push('Заказ ' + orderNumber(order.number) + ' — «' + (companyName || 'Толян') + '»');
+    lines.push('Заказ ' + orderNumber(order.number) + ', «' + (companyName || 'Толян') + '»');
     lines.push('Тип: ' + (rental ? 'Аренда грузовика' : 'Доставка материалов'));
     lines.push(rental ? 'Машина:' : 'Состав:');
     for (var i = 0; i < order.items.length; i++) lines.push(itemLine(order.items[i]));

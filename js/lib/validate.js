@@ -50,7 +50,7 @@
     return ok(s);
   }
 
-  // stock === undefined — без проверки остатка
+  // stock === undefined: без проверки остатка
   function quantity(input, stock) {
     var n = Number(String(input).replace(',', '.'));
     if (input === '' || input == null || !isFinite(n)) return fail('Введите количество');

@@ -10,8 +10,8 @@
     return [
       { id: 'm-sand', name: 'Песок карьерный', description: 'Для подсыпки, выравнивания, раствора', unit: 'т', price: 450, stock: 120, active: true, sort: 1, image: 'assets/img/gravel-pile.jpg' },
       { id: 'm-sand-washed', name: 'Песок мытый', description: 'Чистый, для бетона и кладки', unit: 'т', price: 700, stock: 80, active: true, sort: 2, image: '' },
-      { id: 'm-gravel-520', name: 'Щебень гранитный 5–20', description: 'Фундаменты, бетон, дорожки', unit: 'т', price: 1450, stock: 200, active: true, sort: 3, image: 'assets/img/stone.jpg' },
-      { id: 'm-gravel-2040', name: 'Щебень 20–40', description: 'Основание дорог и площадок', unit: 'т', price: 1350, stock: 150, active: true, sort: 4, image: 'assets/img/stone.jpg' },
+      { id: 'm-gravel-520', name: 'Щебень гранитный 5-20', description: 'Фундаменты, бетон, дорожки', unit: 'т', price: 1450, stock: 200, active: true, sort: 3, image: 'assets/img/stone.jpg' },
+      { id: 'm-gravel-2040', name: 'Щебень 20-40', description: 'Основание дорог и площадок', unit: 'т', price: 1350, stock: 150, active: true, sort: 4, image: 'assets/img/stone.jpg' },
       { id: 'm-screening', name: 'Отсев', description: 'Дорожки, подсыпка, подушка под плитку', unit: 'т', price: 600, stock: 90, active: true, sort: 5, image: 'assets/img/gravel-pile.jpg' },
       { id: 'm-soil', name: 'Грунт плодородный', description: 'Газон, клумбы, огород', unit: 'м³', price: 900, stock: 60, active: true, sort: 6, image: '' },
       { id: 'm-pgs', name: 'ПГС', description: 'Песчано-гравийная смесь для насыпей', unit: 'т', price: 500, stock: 0, active: true, sort: 7, image: '' }
@@ -35,11 +35,11 @@
       phone: '+7 900 000-00-00',
       email: 'info@example.com',
       address: 'Укажите адрес в админ-панели',
-      work_hours: 'Ежедневно, 08:00–20:00',
+      work_hours: 'Ежедневно, 08:00-20:00',
       telegram_username: 'tolyan_demo',
       hero_image: 'assets/img/hero.jpg',
       hero_title: 'Грузовики и стройматериалы с доставкой на объект',
-      hero_subtitle: 'Арендуйте машину на нужное количество часов или закажите песок, щебень, отсев и грунт. Привезём вовремя и по честной цене.',
+      hero_subtitle: 'Арендуйте машину на нужные часы или закажите песок, щебень и грунт. Привезём вовремя, цена видна сразу.',
       advantages: [
         { title: 'Своя техника', text: 'Борта и самосвалы разной грузоподъёмности под вашу задачу.' },
         { title: 'Честная цена', text: 'Стоимость видна до заказа: цена за час и цена за тонну.' },
