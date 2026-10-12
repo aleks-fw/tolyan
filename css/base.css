@@ -1,6 +1,6 @@
 /* Общая база: reset, типографика, кнопки, формы, карточки, модальные окна, toast, анимации. */
 *, *::before, *::after { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; scroll-padding-top: 84px; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; scroll-padding-top: 84px; scrollbar-gutter: stable; }
 body {
   margin: 0; font-family: var(--font); font-size: var(--fs-base); line-height: 1.55;
   color: var(--text); background: var(--bg);
@@ -86,11 +86,19 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .badge-accent { background: var(--accent-soft); color: var(--accent-text); }
 
 /* Модальное окно */
+/* Без backdrop-filter: размытие всей страницы под окном заметно тормозит на слабых видеокартах. */
 .modal-backdrop {
   position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; padding: var(--space-4);
-  background: rgba(12, 10, 9, .55); backdrop-filter: blur(3px);
+  background: rgba(12, 10, 9, .62);
   animation: fade-in var(--t) var(--ease);
 }
+.modal-close { position: relative; flex: none; }
+.modal-close::before, .modal-close::after {
+  content: ""; position: absolute; left: 50%; top: 50%; width: 18px; height: 2px;
+  background: var(--text); border-radius: 2px;
+}
+.modal-close::before { transform: translate(-50%, -50%) rotate(45deg); }
+.modal-close::after { transform: translate(-50%, -50%) rotate(-45deg); }
 .modal {
   width: 100%; max-width: 520px; max-height: calc(100dvh - 2rem); overflow: auto;
   background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-lg);
